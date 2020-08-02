@@ -39,7 +39,7 @@ function draw_survnum_agebin() {
 
 
     // reading csv data 
-	d3.csv("2d_titanic_agebin_surv.csv", function(d, i, columns) {
+	d3.csv("https://raw.githubusercontent.com/sabarinath-git/titatnic_viz/master/scripts/2d_titanic_agebin_surv.csv", function(d, i, columns) {
         for (var i = 1, n = columns.length; i < n; ++i)
             d[columns[i]] = +d[columns[i]];
         return d;
