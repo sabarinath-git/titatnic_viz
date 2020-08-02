@@ -44,7 +44,7 @@ function draw_surv_gender_agebin() {
 	  "column2" : ["male_survived","male_deceased"]
 	}
  
-	d3.csv("https://raw.githubusercontent.com/sabarinath-git/titatnic_viz/master/scripts/3_age_gen_surv_all_allcounts.csv", function(error, data) {
+	d3.csv("https://raw.githubusercontent.com/sabarinath-git/titatnic_viz/master/scripts/3_age_gen_surv_counts.csv", function(error, data) {
 	  var columnHeaders = d3.keys(data[0]).filter(function(key) { return key !== "age_bin"; });
 	  //console.log(columnHeaders);
 	  color.domain(d3.keys(data[0]).filter(function(key) { return key !== "age_bin"; }));
