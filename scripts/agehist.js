@@ -26,7 +26,7 @@ function draw_agehist() {
     var y = d3.scaleLinear().range([height, 0]);
 
 
-	d3.csv("2c_titanic_agebin_surv.csv", function(error, data) {
+	d3.csv("titanicagebinsurv.csv", function(error, data) {
         if (error) {
             throw error;
         }
