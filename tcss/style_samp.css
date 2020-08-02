@@ -1,0 +1,152 @@
+
+/* stylesheet for your custom graph */
+
+.chartsplitl {
+	float: left;
+}
+.chartsplit2 {
+	float: right;
+}
+.background {
+  fill: none;
+  pointer-events: all;
+
+}
+
+.bar {
+  fill: steelblue;
+}
+
+.bar:hover {
+    fill: #F56C4E;
+	
+  }
+  
+  .barpc {
+    /*fill: #8CD3DD;*/
+    fill: #38a0bc;
+  }
+  
+  .barpc:hover {
+      fill: #F56C4E;
+    
+    }
+
+.highlight {
+	fill: #F56C4E;
+	}
+
+  h3 {
+      color: gray;
+      font-size: 20px;
+      font-weight: bold;
+      font-family: Calibri;
+      text-align: center;
+    	padding: 0;
+    	margin: 0;
+  }
+
+  .gtitle {
+      background: white;
+      height: 25px;
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+  }
+
+  .gtitle h3 {
+      /*animation: slideUp 0.75s 0.5s cubic-bezier(0.17, 0.88, 0.32, 1.27) both,
+      fadeIn 0.25s 0.5s ease-in both;*/
+      /*padding: 0 20px;*/
+      position: absolute;
+      text-align: center;
+      /*text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.25);*/
+      /*top: 25%;*/
+      width: 100%;
+  }
+
+
+  .tooltip {
+      position: absolute;
+      display: none;
+      width: auto;
+      height: auto;
+      background: black;
+      border: 0 none;
+      border-radius: 4px;
+      color: white;
+      font: 12px sans-serif;
+      padding: 5px;
+      text-align: center;
+  } 	
+	
+	
+
+#tooltip-container {
+  position: absolute;
+  background-color: #fff;
+  color: #000;
+  padding: 10px;
+  border: 1px solid;
+  display: none;
+}
+
+
+.tooltip_key {
+  font-weight: bold;
+}
+
+.tooltip_value {
+  margin-left: 20px;
+  float: right;
+}
+
+div.bar2tooltip {
+    position: absolute;
+    text-align: center;
+    width: 200px;
+    height: 48px;
+    padding: 2px;
+    margin-bottom: 10px;
+    font-size:  14px;
+    background: darkslategray;
+    color: white;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+    top: 200px;
+    left:50px;
+}
+
+div.bar2tooltip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 12px;
+  width: 100%;
+  line-height: 1;
+  color: darkslategray;
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+  top: 47px;
+  left:0px;
+}
+
+
+.d3-tip {
+  line-height: 1;
+  padding: 14px;
+  background: darkslategray;
+  border-radius: 8px;
+  color: #fff;
+  top: 47px;
+  left:0px;
+}
+
+bar:hover {
+    opacity: 0.5;
+}
+p.lead {
+  font-size:16px;
+}
+
