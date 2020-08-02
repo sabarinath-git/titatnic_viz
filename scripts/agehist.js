@@ -25,7 +25,7 @@ function draw_agehist() {
               .padding(0.03);
     var y = d3.scaleLinear().range([height, 0]);
 
-
+        console.log("hello");
 	d3.csv("https://raw.githubusercontent.com/sabarinath-git/titatnic_viz/master/scripts/2c_titanic_agebin_surv.csv", function(error, data) {
         if (error) {
             throw error;
