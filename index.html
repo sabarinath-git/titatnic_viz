@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<!-- Load d3.js -->
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Titanic Survivors - Sabarinath Suriyamurthy</title>
+
+	<!-- Load d3.js -->
+	<script src="https://d3js.org/d3.v4.js"></script>
+  <script type="text/javascript" src="/scripts/agehist.js"></script>	
+	<script type="text/javascript" src="/scripts/survpc_agebin.js"></script>	
+	<script type="text/javascript" src="/scripts/survnum_agebin.js"></script>	
+	<script type="text/javascript" src="/scripts/surv_gender_agebin.js"></script>	
+   
+  
+	 <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+   
+    <link href="tcss/style_samp.css" rel="stylesheet">  
+
+   
+  </head>
+  
+<body>
+
+   <!-- Begin page content -->
+
+	
+        <div class="container" id = "pageContain">
+
+          <div class="page-header">
+            <h1>Titanic Survival - Women and Children First?</h1>
+
+          </div>
+
+          <p class="lead">
+            According to <a href="https://en.wikipedia.org/wiki/RMS_Titanic"> Wikipedia, </a>
+            in the early morning hours of 15 April 1912, in North Atlantic, the British passenger ship <b>RMS Titanic </b> met a tragic end. She sank after striking an 
+            iceberg. There were 2,224 passengers and crew aboard and more than 1500 died. <br> <br>
+
+            Most of us have heard of chivalry,the courage and valor exhibited by people on board. Does the hard fact support this?
+            Today, let us take a look a small curated dataset from <a href="https://www.kaggle.com/hesh97/titanicdataset-traincsv"> Kaggle </a> and see if there were any category of passengers that fared better. 
+            <br> <br>
+
+            Note that there were 714 passengers with valid datapoints for the purpose of this study, i.e. about 32% of the total estimated passengers who were on the deck of Titanic</p>
+  
+	
+		<!-- <div class="btn-group"> -->
+    <div class="btn-group d-flex" role="group">  
+		  <button type="button" class="btn btn-primary" onclick="draw_viz('hist')"   id="histBtn">Scene1 [Age Distribution]</button>
+		  <button type="button" class="btn btn-primary" onclick="draw_viz('survpc')" id="survpcBtn">Scene2 [Survival Percentage by Age]</button>
+		  <button type="button" class="btn btn-primary" onclick="draw_viz('survnum')" id="survnumBtn">Scene3 [Survival #s by Age]</button>
+		  <button type="button" class="btn btn-primary" onclick="draw_viz('survgen')" id="survgenBtn">Scene4 [Survival #s by Gender & Age]</button>
+		</div>
+
+  <br>
+  <br>
+  <br>
+    <div class="gtitle" id="chartTitle">  <h3>Welcome </h3>   </div>
+
+		<div class="container" id="vizcont">		 
+      
+       <!--  <svg> <img src="/img/Stöwer_Titanic.jpg" alt="Italian Trulli"> </svg> -->
+    </div>
+		
+		
+                        <div class="container" >
+                          <p class="lead" id="chartTakeaway">
+
+                            <b>Takeaways from Scene #1</b> <br> <br>
+
+                             <b>Young adults </b> highlighted in the above chart constituted ~ 32% of the total passengers <b>more than 3 times the counts of children and elderly put together.</b>
+                             These 3 categories are highlighted in the visual so that they can be compared and contrasted as we explore further. It is interesting to do so, as the general expectation is that
+                             the strong and abled fare better under such extreme conditions. <br> <br>
+                             Is this really the case? Let us explore further to understand further.
+                          </p>
+
+
+                        </div>		
+
+	
+
+    <div class="tooltip"></div>
+        <svg></svg>
+
+
+<!-- Create a div where the circle will take place -->
+<div id="dataviz_buttonTriger"></div>
+
+
+
+
+<script>
+
+  draw_agehist();
+  document.getElementById("histBtn").disabled = true;
+
+  /*draw_agehist();	
+	var margin = {top: 50, right: 30 , bottom: 50, left: 40};	
+	var width = document.getElementById('pageContain').clientWidth -margin.left - margin.right ;
+    //console.log(document.getElementById('pageContain').clientWidth)
+	var height = width / 3.236;	
+
+	   
+	var svg = d3.select("#vizcont")
+				  .append("svg")
+                  .attr("width", width + margin.left + margin.right)
+                  //.attr("width", width - margin.left - margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+
+var imgs = //svg.selectAll("image");
+                //imgs.enter()
+                svg.append("svg:img")
+                .attr("xlink:href", "http://localhost/img/Stöwer_Titanic.jpg")
+                .attr("x", "100")
+                .attr("y", "100")
+                .attr("width", "640")
+                .attr("height", "438");          
+  console.log(imgs)        ;
+ // By <a href="//commons.wikimedia.org/wiki/Willy_St%C3%B6wer" title="Willy Stöwer">Willy Stöwer</a>, died on 31st May 1931 - Magazine Die Gartenlaube, <a href="https://en.wikipedia.org/wiki/Die_Gartenlaube" class="extiw" title="en:Die Gartenlaube">en:Die Gartenlaube</a> and <a href="https://de.wikipedia.org/wiki/Die_Gartenlaube" class="extiw" title="de:Die Gartenlaube">de:Die Gartenlaube</a>, Public Domain, <a href="https://commons.wikimedia.org/w/index.php?curid=97646">Link</a>
+
+ */
+
+// A function that update the color circle
+var draw_viz = function(scene){
+
+	//based on the scene parameter
+		if (scene == "hist") {
+
+      // clear the canvas 
+      d3.selectAll('svg').remove();
+
+      // set the chart title
+      var cTitle = "  <h3>Age Distribution of Passengers</h3>  ";
+      d3.select("#chartTitle")
+         .html(cTitle)   ;   
+
+      // Construct the appropriate chart
+      draw_agehist();
+      
+
+      // set the chart title
+      var cTakeway = "<b>Takeaways from Scene #1</b> <br> <br> <b>Young adults </b> highlighted in the above chart constituted ~ 32% of total passengers <b>more than 3 times the counts of children and elderly put together.</b></br>"
+                   + "These 3 categories are highlighted in the visual so that they can be compared and contrasted as we explore further. It is interesting to do so, as the general expectation is that"
+                   + "the strong and abled fare better under such extreme conditions. <br> <br> Is this really the case? Let us explore further to understand further.";
+      d3.select("#chartTakeaway")
+         .html(cTakeway)   ;   
+
+      // toggle the burron appropriately
+      document.getElementById("survpcBtn").disabled = false;
+      document.getElementById("histBtn").disabled = true;
+      document.getElementById("survnumBtn").disabled = false;
+      document.getElementById("survgenBtn").disabled = false;
+
+		} else if (scene == "survpc"){
+
+      // clear the canvas 
+      d3.selectAll('svg').remove();
+      
+      // set the chart title
+      var cTitle = "  <h3>Passenger's Survival percentage by Age</h3>  " ;   
+      d3.select("#chartTitle")
+         .html(cTitle)
+
+      // Construct the appropriate chart 
+      draw_survpc_agebin();  
+
+      // set the chart title
+      var cTakeway = "<b>Takeaways from Scene #2</b> <br> <br> <b>Chidlren aged between 0 and 10 </b> did fare better and infact topped survival rate ~ 59%."
+                  +   " However it is interesting to note that <b>Elderly aged between 71 and 80 </b> is at the bottom with 20% survival rate: behind all the other categories like teens, young adults,"
+                  +   "adults, middle aged, seniors etc . Weren't Elderly tended like children? </b></br>"
+                   + "This scene may not be sufficient to provide this information. Let us proceed with our exploration. Perhaps there is an explanation! ";
+      d3.select("#chartTakeaway")
+         .html(cTakeway)   ;  
+
+
+      // toggle the burron appropriately
+      document.getElementById("survpcBtn").disabled = true;
+      document.getElementById("histBtn").disabled = false;
+      document.getElementById("survnumBtn").disabled = false;
+      document.getElementById("survgenBtn").disabled = false;
+
+
+
+			
+
+		} else if (scene == "survnum") {
+
+      // clear the canvas 
+      d3.selectAll('svg').remove();
+      
+      // set the chart title
+      var cTitle = "  <h3>Passenger's Survival Vs Deceased count by Age</h3>  " ;   
+      d3.select("#chartTitle")
+         .html(cTitle);
+      
+     // Construct the appropriate chart  
+     draw_survnum_agebin();
+     
+
+      // set the chart title
+      var cTakeway = "<b>Takeaways from Scene #3</b> <br> <br> <b>Young Adult aged between 21 and 30 </b> suffered worst casualty i.e. 146 out of total 714 passengers"
+                  +   " it does seem to support the fact that it was not all the men for themselves. However please do note that there could be other factors at play beyond this dataset."
+                   + "On the <b> poor survival rate among Elderly </b>, the raw number as opposed to percentages from Scene #2 reveal that the datapoints in this age bin is very low and"
+                   + "hence the Survival rate is sensitive to the nums and dens as show in the above chart. i.e. 4 deceased vs 1 survived in this age group "
+                   + "<br> <br> Let us peel one more layer and see if adding another dimension offers further insight!"
+
+      d3.select("#chartTakeaway")
+         .html(cTakeway)   ;  
+         
+         
+     
+     // toggle the burron appropriately
+      document.getElementById("survnumBtn").disabled = true;
+      document.getElementById("histBtn").disabled = false;
+      document.getElementById("survpcBtn").disabled = false;
+      document.getElementById("survgenBtn").disabled = false;
+
+
+
+      
+			
+			
+		}	else if (scene == "survgen") {
+      
+       // clear the canvas 
+      d3.selectAll('svg').remove();
+
+      // set the chart title
+      var cTitle = "  <h3>Passenger's  Survival Vs Deceased count by Gender for each AgeBin </h3>  " ;   
+      d3.select("#chartTitle")
+         .html(cTitle);
+
+      // Construct the appropriate chart 
+      draw_surv_gender_agebin(); 
+
+
+      // set the chart title
+      var cTakeway = "<b>Takeaways from Scene #4</b> <br> <br> Slicing the data by Gender gives a telling picture. <b>Female passengers fared well across all the age groups based on the dataset.</b>"
+                  +   "<ul> <li>Among children, there were 19 Female and Male children who survived. But taking total Female and Male children in the age group into account,"
+                  +   "Female marginally fared well in this category.</li>"
+                  +  "<li> Among Seniors aged between 61 to 70, Female survival rate was 100% as opposed to Male counterpart who had 7%.</li>"
+                  + "<li> Among Young Adults who suffered worst casuality [146 out of 230 passengers deceased], off the remaining 84 who survived 61 were Female as compared to 23 Male passengers </li>"
+                  +"<li> Among Elderly aged between 71 to 80, there were no Female passengers. </li> </ul>"
+                  + "The observation is valid across rest of the age groups as well, which can be seen in the above chart. <br> <br>"
+                  + " <b> While the data does lend support to the 'Women and Children First drill', please do note that Correlation does not imply Causation.</b>"
+                  + " There could be other dimensions of data that could provide further patterns."
+
+
+      d3.select("#chartTakeaway")
+         .html(cTakeway)   ;  
+         
+      
+      // toggle the burron appropriately
+      document.getElementById("survnumBtn").disabled = false;
+      document.getElementById("histBtn").disabled = false;
+      document.getElementById("survpcBtn").disabled = false;
+      document.getElementById("survgenBtn").disabled = true;      
+      
+
+			
+		}	
+		
+	}		
+
+</script>
+
+  </body>
+  
+</html>
